@@ -1,0 +1,71 @@
+Description:
+    List all available Rails commands with their options and metadata.
+
+    This command is designed for programmatic consumption by tools and AI agents,
+    providing structured output about available commands.
+
+Examples:
+    # Output all commands as a table (default)
+    bin/rails commands
+
+    # Output as JSON for programmatic consumption
+    bin/rails commands --format=json
+
+    # Output as YAML
+    bin/rails commands --format=yaml
+
+    # Filter commands by name pattern
+    bin/rails commands --grep=db
+    bin/rails commands -g migrate
+
+    # Output only command names (minimal tokens)
+    bin/rails commands --names-only --format=json
+
+    # Combine grep and names-only for minimal output
+    bin/rails commands --grep=db --names-only --format=json
+
+    # Include hidden commands and help subcommands
+    bin/rails commands --all
+
+    # Exclude Rake tasks (Thor commands only)
+    bin/rails commands --no-rake
+
+Options:
+    --format, -f     Output format: json, yaml, or table (default: table)
+    --grep, -g       Filter commands by name (case-insensitive substring match)
+    --names-only     Output only command names as a list
+    --all            Include hidden commands and help subcommands
+    --no-rake        Exclude Rake tasks
+
+Output Schema (JSON):
+    {
+      "schema_version": "1.0",
+      "rails_version": "8.0.0",
+      "commands": [
+        {
+          "kind": "thor",
+          "full_name": "routes",
+          "namespace": "rails:routes",
+          "command": "routes",
+          "description": "List all the defined routes",
+          "options": [
+            {
+              "name": "--controller",
+              "aliases": ["-c"],
+              "type": "string",
+              "description": "Filter by a specific controller"
+            }
+          ]
+        },
+        {
+          "kind": "rake",
+          "full_name": "db:migrate",
+          "namespace": "rake",
+          "description": "Migrate the database",
+          "arguments": ["version"]
+        }
+      ]
+    }
+
+Names-Only Output (JSON):
+    ["about", "console", "db:migrate", "routes", "server", ...]
